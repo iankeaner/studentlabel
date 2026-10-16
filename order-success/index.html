@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order placed — Student Label</title>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bricolage+Grotesque:wght@700;800&family=Caveat:wght@700&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbf7ee; --ink:#14213d; --rule:#cfe2f3; --margin:#f2a7a7; --hl:#ffe14d; --pencil:#f5b700; --line:#e6dfcf; --card:#fffdf8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink); font-family:'DM Sans',system-ui,sans-serif; font-size:16px; line-height:1.5;
+  background-color:var(--paper);
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule) 31px,var(--rule) 32px);
+  background-attachment:local;
+}
+body::before{ /* red margin line */
+  content:""; position:fixed; left:72px; top:0; bottom:0; width:2px; background:var(--margin); opacity:.7; pointer-events:none; z-index:0;
+}
+@media(max-width:700px){ body::before{ left:14px } }
+h1,h2,h3{font-family:'Bricolage Grotesque','DM Sans',sans-serif; line-height:1.05; margin:0}
+a{color:inherit}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px; position:relative; z-index:1}
+
+/* nav — brand + cart only */
+.nav{position:sticky; top:0; z-index:20; background:rgba(255,253,246,.94); backdrop-filter:blur(6px); border-bottom:2px solid var(--ink)}
+.nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px}
+.brand{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:22px; text-decoration:none; letter-spacing:-.02em;
+  background:linear-gradient(transparent 58%,var(--hl) 58%); padding:0 4px}
+.cart-btn{display:inline-flex; align-items:center; gap:10px; background:var(--ink); color:#fff; border:0; border-radius:999px; padding:10px 18px 10px 16px;
+  font:700 15px 'DM Sans',sans-serif; text-decoration:none; cursor:pointer}
+.cart-btn svg{width:20px; height:20px}
+.cart-btn .count{background:var(--hl); color:var(--ink); border-radius:999px; min-width:22px; height:22px; padding:0 6px; display:inline-grid; place-items:center; font-size:13px}
+.cart-btn .count[hidden]{display:none}
+.bump{animation:bump .35s}
+@keyframes bump{40%{transform:scale(1.12) rotate(-3deg)}}
+
+/* landing */
+.hero{padding:72px 0 40px}
+.hero .kicker{font-family:'Caveat',cursive; font-size:30px; color:#c5050c; transform:rotate(-2deg); display:inline-block}
+.hero h1{font-size:clamp(44px,8vw,92px); font-weight:800; letter-spacing:-.03em; margin:6px 0 18px}
+.hero h1 mark{background:linear-gradient(transparent 55%,var(--hl) 55%); color:inherit; padding:0 6px}
+.hero p{font-size:19px; max-width:520px; margin:0}
+.section-title{font-size:15px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin:36px 0 16px}
+.school-list{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px; padding-bottom:64px}
+.school-card{display:flex; flex-direction:column; gap:6px; min-height:220px; padding:22px; text-decoration:none; color:#fff; background:var(--c);
+  border:2px solid var(--ink); border-radius:6px; box-shadow:6px 6px 0 var(--ink); transition:transform .15s, box-shadow .15s; position:relative}
+.school-card:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--ink)}
+.school-card .est{font-size:12px; letter-spacing:.18em; font-weight:700; opacity:.85}
+.school-card strong{font:800 clamp(34px,5vw,46px)/1 'Bricolage Grotesque',sans-serif; margin-top:auto}
+.school-card .city{opacity:.9}
+.school-card .go{font-weight:700; margin-top:10px}
+.school-card.soon{background:transparent; color:var(--ink); border-style:dashed; box-shadow:none; cursor:default}
+.school-card.soon:hover{transform:none; box-shadow:none}
+
+/* school page */
+.school-head{background:var(--c); color:#fff; border-bottom:2px solid var(--ink); position:relative; z-index:1}
+.school-head .wrap{padding-top:44px; padding-bottom:40px}
+.school-head .est{font-size:12px; letter-spacing:.2em; font-weight:700; opacity:.85}
+.school-head h1{font-size:clamp(42px,8vw,84px); font-weight:800; letter-spacing:-.03em; margin:6px 0 10px}
+.school-head p{margin:0; max-width:520px; font-size:18px}
+.crumb{display:inline-block; margin-bottom:14px; font-weight:700; text-decoration:none; opacity:.9}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:26px; padding:40px 0 72px}
+.product{background:var(--card); border:2px solid var(--ink); border-radius:6px; overflow:hidden; box-shadow:5px 5px 0 var(--ink)}
+.product-art{background:repeating-linear-gradient(45deg,#f1ecdf 0 10px,#f6f2e8 10px 20px); padding:0}
+.product-art svg{width:100%; display:block; padding:14px}
+.mock{width:100%; display:block; height:auto}
+.product-body{padding:16px 18px 20px}
+.product-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px}
+.product-top h3{font-size:24px; font-weight:800}
+.price{font-weight:700; font-size:20px}
+.opt-label{font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin:14px 0 8px; color:#4a5470}
+.swatches{display:flex; gap:10px}
+.swatch{width:30px; height:30px; border-radius:50%; border:2px solid var(--ink); cursor:pointer; padding:0}
+.swatch.on{outline:3px solid var(--hl); outline-offset:2px}
+.sizes{display:flex; flex-wrap:wrap; gap:8px}
+.size{min-width:46px; height:38px; border:2px solid var(--ink); background:#fff; border-radius:4px; font:700 14px 'DM Sans',sans-serif; cursor:pointer}
+.size.on{background:var(--ink); color:#fff}
+.add{width:100%; margin-top:18px; height:48px; border:2px solid var(--ink); border-radius:4px; background:var(--hl); font:800 16px 'DM Sans',sans-serif; cursor:pointer; box-shadow:3px 3px 0 var(--ink)}
+.add:active{transform:translate(2px,2px); box-shadow:1px 1px 0 var(--ink)}
+.msg{min-height:20px; margin:8px 0 0; font-size:14px; font-weight:700}
+.msg.ok{color:#14733a} .msg.warn{color:#b3261e}
+
+/* cart */
+.page-title{font-size:clamp(36px,6vw,60px); font-weight:800; padding:48px 0 18px}
+.cart-layout{display:grid; grid-template-columns:1fr 320px; gap:28px; padding-bottom:72px; align-items:start}
+@media(max-width:820px){.cart-layout{grid-template-columns:1fr}}
+.cart-list{background:var(--card); border:2px solid var(--ink); border-radius:6px; box-shadow:5px 5px 0 var(--ink)}
+.cart-row{display:grid; grid-template-columns:96px 1fr auto; gap:16px; padding:16px; border-bottom:1px solid var(--line); align-items:center}
+.cart-row:last-child{border-bottom:0}
+.cart-art{background:#f1ecdf; border-radius:4px; padding:4px}
+.cart-info h3{font-size:20px} .cart-info p{margin:2px 0 10px; color:#4a5470; font-size:14px}
+.qty{display:flex; align-items:center; gap:10px}
+.qty button{width:30px; height:30px; border:2px solid var(--ink); background:#fff; border-radius:4px; font-weight:800; cursor:pointer}
+.qty .rm{width:auto; padding:0 10px; border:0; background:none; text-decoration:underline; font-weight:500; color:#4a5470}
+.cart-price{font-weight:800; font-size:18px}
+.summary{background:var(--card); border:2px solid var(--ink); border-radius:6px; box-shadow:5px 5px 0 var(--ink); padding:20px; position:sticky; top:84px}
+.summary .line{display:flex; justify-content:space-between; font-weight:700; font-size:18px; margin-bottom:6px}
+.summary small{display:block; color:#4a5470; margin-bottom:16px}
+.checkout{width:100%; height:52px; border:2px solid var(--ink); background:var(--ink); color:#fff; border-radius:4px; font:800 17px 'DM Sans',sans-serif; cursor:pointer}
+.checkout:disabled{opacity:.6}
+#checkoutMsg{min-height:20px; font-size:14px; font-weight:700; color:#b3261e; margin:10px 0 0}
+.empty{padding:36px 0 96px} .empty p{font-size:18px} .btn{display:inline-block; margin-top:8px; padding:12px 20px; border:2px solid var(--ink); border-radius:4px; background:var(--hl); font-weight:800; text-decoration:none; box-shadow:3px 3px 0 var(--ink)}
+.thanks{padding:72px 0 120px; max-width:560px} .thanks h1{font-size:clamp(40px,7vw,72px); font-weight:800; margin-bottom:14px}
+
+.footer{border-top:2px solid var(--ink); background:rgba(255,253,246,.94); position:relative; z-index:1}
+.footer .wrap{padding-top:22px; padding-bottom:26px; font-size:13px; color:#4a5470}
+.footer b{color:var(--ink)}
+
+</style></head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="/">Student Label</a>
+  <a class="cart-btn" id="cartBtn" href="/cart/" aria-label="Cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1.5 13h-15L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+    Cart <span class="count" id="cartCount" hidden>0</span>
+  </a>
+</div></header>
+<main class="wrap"><div class="thanks" id="successPage">
+  <h1>You’re all set.</h1>
+  <p>Thanks for your order — a receipt is on its way to your email.</p>
+  <a class="btn" href="/">Back to Student Label</a>
+</div></main>
+<footer class="footer"><div class="wrap"><b>Student Label</b> — student-made gear. Not affiliated with or endorsed by any university; school names are used only to describe where the gear is for.</div></footer>
+<script>
+// Student Label — catalog. Add a school by adding an entry to SCHOOLS and
+// (optionally) overriding listings; every school gets the default designs.
+(function (root) {
+  var SCHOOLS = {
+    'uw-madison': {
+      slug: 'uw-madison', name: 'UW–Madison', city: 'Madison, WI', est: 1848,
+      colors: { main: '#c5050c', dark: '#8f0309', soft: '#fde8e8' },
+      colorLabel: 'Cardinal', blurb: 'On, Wisconsin. Gear for the lakeshore path, the Terrace and every Saturday in the fall.'
+    },
+    'ut-austin': {
+      slug: 'ut-austin', name: 'UT Austin', city: 'Austin, TX', est: 1883,
+      colors: { main: '#bf5700', dark: '#8a3f00', soft: '#fdeedd' },
+      colorLabel: 'Burnt Orange', blurb: 'Hook ’em. Gear for the Drag, the Tower at night and anywhere south of campus.'
+    }
+  };
+
+  var DESIGNS = [
+    { key: 'beer',    word: 'BEER',    price: 25 },
+    { key: 'college', word: 'COLLEGE', price: 25 },
+    { key: 'sports',  word: 'SPORTS',  price: 25 }
+  ];
+
+  var SIZES = ['S', 'M', 'L', 'XL', '2XL'];
+
+  function productsFor(slug) {
+    var s = SCHOOLS[slug];
+    return DESIGNS.map(function (d) {
+      return {
+        id: slug + '-' + d.key,
+        school: slug,
+        design: d.key,
+        word: d.word,
+        name: d.word + ' TEE',
+        price: d.price,
+        sizes: SIZES,
+        colorways: [
+          { key: 'white',  label: 'White',       tee: '#f6f2e8', ink: s.colors.main, edge: '#111111' },
+          { key: 'school', label: s.colorLabel,  tee: s.colors.main, ink: '#ffffff',  edge: '#111111' }
+        ]
+      };
+    });
+  }
+
+  function allProducts() {
+    var out = [];
+    Object.keys(SCHOOLS).forEach(function (k) { out = out.concat(productsFor(k)); });
+    return out;
+  }
+
+  var api = { SCHOOLS: SCHOOLS, DESIGNS: DESIGNS, SIZES: SIZES, productsFor: productsFor, allProducts: allProducts };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.SL_DATA = api;
+})(typeof window !== 'undefined' ? window : this);
+
+</script>
+<script>
+// Student Label — shared cart + rendering
+(function () {
+  // Set this to your deployed checkout Worker URL (see studentlabel-checkout-worker.js)
+  var CHECKOUT_URL = '';
+
+  var D = window.SL_DATA;
+  var KEY = 'studentLabelCart';
+
+  var mem = null; // in-memory copy, used when browser storage is unavailable
+  function readCart() {
+    if (mem) return mem;
+    try { var c = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(c) ? c : []; }
+    catch (e) { return []; }
+  }
+  function writeCart(c) { mem = c; try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) {} updateBadge(); }
+  function money(n) { return '$' + n.toFixed(2); }
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  function updateBadge() {
+    var n = readCart().reduce(function (a, i) { return a + i.qty; }, 0);
+    var el = document.getElementById('cartCount');
+    if (!el) return;
+    el.textContent = n;
+    el.hidden = n === 0;
+  }
+
+  function addToCart(item) {
+    var cart = readCart();
+    var hit = cart.filter(function (i) { return i.id === item.id && i.colorway === item.colorway && i.size === item.size; })[0];
+    if (hit) hit.qty = Math.min(20, hit.qty + 1); else cart.push(Object.assign({ qty: 1 }, item));
+    writeCart(cart);
+  }
+
+  // ---------- tee illustration (inline SVG, no image files needed) ----------
+  var TEE = 'M122 38 L162 26 Q200 72 238 26 L278 38 L372 100 L336 164 L292 138 L292 384 L108 384 L108 138 L64 164 L28 100 Z';
+  function teeSVG(p, cw, uid) {
+    var im = window.SL_IMAGES && window.SL_IMAGES[p.id + '-' + cw.key];
+    if (im) return '<img class="mock" src="' + im + '" alt="' + esc(p.name + ' in ' + cw.label) + '">';
+    var size = p.word.length > 6 ? 46 : p.word.length > 4 ? 56 : 74;
+    var s = D.SCHOOLS[p.school];
+    return '<svg viewBox="0 0 400 420" role="img" aria-label="' + esc(p.name + ' in ' + cw.label) + '">' +
+      '<path d="' + TEE + '" fill="' + cw.tee + '" stroke="rgba(0,0,0,.18)" stroke-width="2" stroke-linejoin="round"/>' +
+      '<path d="M162 26 Q200 72 238 26" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/>' +
+      '<defs><path id="arc-' + uid + '" d="M78 236 Q200 172 322 236"/></defs>' +
+      '<text font-family="\'Alfa Slab One\', Georgia, serif" font-size="' + size + '" fill="' + cw.ink + '" stroke="' + cw.edge + '" stroke-width="5" paint-order="stroke" stroke-linejoin="round" text-anchor="middle">' +
+      '<textPath href="#arc-' + uid + '" startOffset="50%">' + p.word + '</textPath></text>' +
+      '<text x="200" y="276" text-anchor="middle" font-family="\'DM Sans\', Arial, sans-serif" font-weight="700" font-size="11" letter-spacing="1.5" fill="' + (cw.tee === '#f6f2e8' ? '#333' : 'rgba(255,255,255,.85)') + '">' + esc(s.name.toUpperCase()) + ' · EST. ' + s.est + '</text>' +
+      '</svg>';
+  }
+  window.SL_teeSVG = teeSVG;
+
+  // ---------- school shop page ----------
+  function renderShop() {
+    var grid = document.getElementById('productGrid');
+    if (!grid) return;
+    var slug = grid.getAttribute('data-school');
+    D.productsFor(slug).forEach(function (p) {
+      var state = { cw: p.colorways[0], size: null };
+      var card = document.createElement('article');
+      card.className = 'product';
+      card.innerHTML =
+        '<div class="product-art"></div>' +
+        '<div class="product-body">' +
+          '<div class="product-top"><h3>' + esc(p.name) + '</h3><span class="price">' + money(p.price) + '</span></div>' +
+          '<div class="opt-label">Color — <b class="cw-name"></b></div>' +
+          '<div class="swatches"></div>' +
+          '<div class="opt-label">Size</div>' +
+          '<div class="sizes"></div>' +
+          '<button class="add" type="button">Add to cart</button>' +
+          '<p class="msg" role="status"></p>' +
+        '</div>';
+      var art = card.querySelector('.product-art');
+      var sw = card.querySelector('.swatches');
+      var sz = card.querySelector('.sizes');
+      var msg = card.querySelector('.msg');
+      function drawArt() { art.innerHTML = teeSVG(p, state.cw, p.id); card.querySelector('.cw-name').textContent = state.cw.label; }
+      p.colorways.forEach(function (cw) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'swatch' + (cw === state.cw ? ' on' : '');
+        b.style.background = cw.tee; b.title = cw.label; b.setAttribute('aria-label', cw.label);
+        b.onclick = function () { state.cw = cw; [].forEach.call(sw.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); drawArt(); };
+        sw.appendChild(b);
+      });
+      p.sizes.forEach(function (s) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'size'; b.textContent = s;
+        b.onclick = function () { state.size = s; [].forEach.call(sz.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); msg.textContent = ''; };
+        sz.appendChild(b);
+      });
+      card.querySelector('.add').onclick = function () {
+        if (!state.size) { msg.textContent = 'Pick a size first.'; msg.className = 'msg warn'; return; }
+        addToCart({ id: p.id, school: p.school, name: p.name, colorway: state.cw.label, size: state.size, price: p.price });
+        msg.textContent = 'Added to cart ✓'; msg.className = 'msg ok';
+        var c = document.getElementById('cartBtn'); c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump');
+      };
+      drawArt();
+      grid.appendChild(card);
+    });
+  }
+
+  // ---------- landing ----------
+  function renderLanding() {
+    var el = document.getElementById('schoolList');
+    if (!el) return;
+    Object.keys(D.SCHOOLS).forEach(function (k) {
+      var s = D.SCHOOLS[k];
+      var a = document.createElement('a');
+      a.className = 'school-card'; a.href = '/' + s.slug + '/';
+      if (window.SL_SPA) { a.setAttribute('data-route', '/' + s.slug + '/'); a.href = '#'; }
+      a.style.setProperty('--c', s.colors.main); a.style.setProperty('--d', s.colors.dark);
+      a.innerHTML = '<span class="est">EST. ' + s.est + '</span><strong>' + esc(s.name) + '</strong><span class="city">' + esc(s.city) + '</span><span class="go">Shop the label →</span>';
+      el.appendChild(a);
+    });
+    var soon = document.createElement('div');
+    soon.className = 'school-card soon';
+    soon.innerHTML = '<span class="est">NEXT UP</span><strong>Your school?</strong><span class="city">More campuses coming soon</span>';
+    el.appendChild(soon);
+  }
+
+  // ---------- cart page ----------
+  function renderCart() {
+    var box = document.getElementById('cartItems');
+    if (!box) return;
+    var cart = readCart();
+    var totals = document.getElementById('cartTotals');
+    var empty = document.getElementById('cartEmpty');
+    var wrap = document.getElementById('cartWrap');
+    if (!cart.length) { wrap.hidden = true; empty.hidden = false; return; }
+    wrap.hidden = false; empty.hidden = true;
+    box.innerHTML = '';
+    var sub = 0;
+    cart.forEach(function (it, idx) {
+      sub += it.price * it.qty;
+      var p = D.allProducts().filter(function (x) { return x.id === it.id; })[0];
+      var cw = p && p.colorways.filter(function (c) { return c.label === it.colorway; })[0];
+      var row = document.createElement('div');
+      row.className = 'cart-row';
+      row.innerHTML =
+        '<div class="cart-art">' + (p && cw ? teeSVG(p, cw, 'c' + idx) : '') + '</div>' +
+        '<div class="cart-info"><h3>' + esc(it.name) + '</h3><p>' + esc(D.SCHOOLS[it.school] ? D.SCHOOLS[it.school].name : '') + ' · ' + esc(it.colorway) + ' · Size ' + esc(it.size) + '</p>' +
+        '<div class="qty"><button type="button" data-a="dec" aria-label="Fewer">−</button><span>' + it.qty + '</span><button type="button" data-a="inc" aria-label="More">+</button><button type="button" class="rm" data-a="rm">Remove</button></div></div>' +
+        '<div class="cart-price">' + money(it.price * it.qty) + '</div>';
+      row.onclick = function (e) {
+        var a = e.target.getAttribute && e.target.getAttribute('data-a'); if (!a) return;
+        var c = readCart();
+        if (a === 'inc') c[idx].qty = Math.min(20, c[idx].qty + 1);
+        if (a === 'dec') c[idx].qty -= 1;
+        if (a === 'rm' || c[idx].qty < 1) c.splice(idx, 1);
+        writeCart(c); renderCart();
+      };
+      box.appendChild(row);
+    });
+    totals.textContent = money(sub);
+  }
+
+  function setupCheckout() {
+    var btn = document.getElementById('checkoutBtn');
+    if (!btn) return;
+    var msg = document.getElementById('checkoutMsg');
+    btn.onclick = function () {
+      if (!CHECKOUT_URL) { msg.textContent = 'Checkout isn’t connected yet — add your Worker URL in assets/app.js.'; return; }
+      btn.disabled = true; btn.textContent = 'One sec…'; msg.textContent = '';
+      fetch(CHECKOUT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(readCart()) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { if (d && d.url) window.location.href = d.url; else throw new Error(d && d.error || 'failed'); })
+        .catch(function () { btn.disabled = false; btn.textContent = 'Checkout'; msg.textContent = 'Something went wrong starting checkout. Try again.'; });
+    };
+  }
+
+  function setupSuccess() {
+    if (document.getElementById('successPage') && /session_id=/.test(location.search)) writeCart([]);
+  }
+
+  window.SL_init = function () { updateBadge(); renderLanding(); renderShop(); renderCart(); setupCheckout(); setupSuccess(); };
+  if (!window.SL_SPA) window.SL_init();
+})();
+
+</script>
+<script>
+// Local-preview helper: when opened straight from disk (file://), site links like "/cart/" have no server to resolve them, so map them to the matching index.html. Does nothing once hosted.
+(function(){
+  if (location.protocol !== 'file:') return;
+  var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
+    var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;
+    e.preventDefault();
+    var t = h.slice(1); if (!t || /\/$/.test(t)) t += 'index.html';
+    location.href = dir + t;
+  });
+})();
+</script>
+</body></html>
