@@ -130,6 +130,9 @@ body.doodling .dd-bar .dd-tools{display:flex}
 .dd-sw{width:24px; height:24px; padding:0 !important; border-radius:50% !important}
 .dd-sw.on{outline:3px solid var(--ink); outline-offset:2px}
 
+/* Keep all content to the right of the red margin line (line sits at x=72..74) */
+.wrap{padding-left:clamp(24px, calc(98px - (100vw - 1080px) / 2), 98px)}
+@media(max-width:700px){ .wrap{padding-left:30px} }
 /* Hero text sits on the ruled lines (32px grid) */
 .hero .kicker{display:block !important; transform:rotate(-2deg) !important; transform-origin:left center; line-height:32px !important; font-size:30px; position:relative}
 .hero h1{line-height:96px !important; margin:0 0 32px !important; position:relative}
