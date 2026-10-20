@@ -225,6 +225,15 @@ body.doodling .dd-bar .dd-tools{display:flex}
         { key: 'carolina', label: 'Carolina Blue', tee: '#a6cbf1', ink: '#ffffff', edge: '#13294b' },
         { key: 'white',    label: 'White',         tee: '#f6f2e8', ink: '#78acd2', edge: '#13294b' }
       ]
+    },
+    'ohio-state': {
+      slug: 'ohio-state', name: 'Ohio State', city: 'Columbus, OH', est: 1870,
+      colors: { main: '#bb0000', dark: '#8a0000', soft: '#fde8e8' },
+      colorLabel: 'Scarlet', blurb: 'Gear for the Oval, High Street and every Saturday in the Shoe.',
+      colorways: [
+        { key: 'black', label: 'Black', tee: '#15171a', ink: '#bb0d2f', edge: '#a7b1b7' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#bb0d2f', edge: '#a7b1b7' }
+      ]
     }
   };
 
@@ -507,7 +516,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
 (function(){
   if (location.protocol !== 'file:') return;
   var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
-  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
     var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;
