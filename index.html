@@ -197,13 +197,25 @@ body.doodling .dd-bar .dd-tools{display:flex}
     'nvidia': {
       slug: 'nvidia', name: 'NVIDIA', city: 'Santa Clara, CA', est: 1993,
       colors: { main: '#76b900', dark: '#4f7a00', soft: '#eef7d9', ink: '#0b0b0b' },
-      colorLabel: 'Black', blurb: 'For the people who build the GPUs, babysit the clusters and run on coffee. Procaffeination included.',
+      colorLabel: 'Black', blurb: 'For the people who build the GPUs, babysit the clusters and run on coffee.',
       designs: [
-        { key: 'procaffeination', word: 'Procaffeination', name: 'PROCAFFEINATION TEE', price: 25 },
-        { key: 'engineer',        word: 'Engineer',        name: 'ENGINEER TEE',        price: 25 },
-        { key: 'beer-elements',   word: 'BeEr',            name: 'BEER (ELEMENTS) TEE', price: 25 }
+        { key: 'procaffeination', word: 'Procaffeination', name: 'PROCAFFEINATION TEE', price: 30 },
+        { key: 'engineer',        word: 'Engineer',        name: 'ENGINEER TEE',        price: 30 },
+        { key: 'beer-elements',   word: 'BeEr',            name: 'BEER (ELEMENTS) TEE', price: 30 }
       ],
-      colorways: [ { key: 'black', label: 'Black', tee: '#15171a', ink: '#76b900', edge: '#15171a' } ]
+      colorways: [
+        { key: 'black', label: 'Black', tee: '#15171a', ink: '#76b900', edge: '#15171a' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#76b900', edge: '#f6f2e8' }
+      ]
+    },
+    'tmcc': {
+      slug: 'tmcc', name: 'TMCC', city: 'Reno, NV', est: 1971,
+      colors: { main: '#aab300', dark: '#7a8000', soft: '#f4f6d0', ink: '#0b0b0b' },
+      colorLabel: 'Black', blurb: 'Truckee Meadows Community College. For the Wizards, the transfer plans and the long drives up to the Sierra.',
+      colorways: [
+        { key: 'black', label: 'Black', tee: '#15171a', ink: '#aab300', edge: '#15171a' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#aab300', edge: '#f6f2e8' }
+      ]
     }
   };
 
@@ -486,7 +498,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
 (function(){
   if (location.protocol !== 'file:') return;
   var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
-  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
     var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;
