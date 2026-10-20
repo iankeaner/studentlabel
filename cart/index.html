@@ -108,6 +108,7 @@ a{color:inherit}
 .footer b{color:var(--ink)}
 
 
+[hidden]{display:none !important} /* so hidden cart/empty panels really hide */
 /* long product names: wrap the title, keep the price on one line */
 .product-top{flex-wrap:wrap; row-gap:2px}
 .product-top h3{min-width:0}
@@ -237,7 +238,7 @@ a{color:inherit}
 // Student Label — shared cart + rendering
 (function () {
   // Set this to your deployed checkout Worker URL (see studentlabel-checkout-worker.js)
-  var CHECKOUT_URL = 'https://studentlabel-checkout.iankeaner.workers.dev/';
+  var CHECKOUT_URL = '';
 
   var D = window.SL_DATA;
   var KEY = 'studentLabelCart';
