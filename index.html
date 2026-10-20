@@ -216,6 +216,15 @@ body.doodling .dd-bar .dd-tools{display:flex}
         { key: 'black', label: 'Black', tee: '#15171a', ink: '#aab300', edge: '#15171a' },
         { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#aab300', edge: '#f6f2e8' }
       ]
+    },
+    'unc-chapel-hill': {
+      slug: 'unc-chapel-hill', name: 'UNC Chapel Hill', city: 'Chapel Hill, NC', est: 1789,
+      colors: { main: '#7bafd4', dark: '#4b7fa6', soft: '#e6f0f8', ink: '#13294b' },
+      colorLabel: 'Carolina Blue', blurb: 'Gear for Franklin Street, the Old Well and every walk across the Quad.',
+      colorways: [
+        { key: 'carolina', label: 'Carolina Blue', tee: '#a6cbf1', ink: '#ffffff', edge: '#13294b' },
+        { key: 'white',    label: 'White',         tee: '#f6f2e8', ink: '#78acd2', edge: '#13294b' }
+      ]
     }
   };
 
@@ -498,7 +507,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
 (function(){
   if (location.protocol !== 'file:') return;
   var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
-  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
     var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;
