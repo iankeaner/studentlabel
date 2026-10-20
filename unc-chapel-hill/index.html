@@ -108,6 +108,10 @@ a{color:inherit}
 .footer b{color:var(--ink)}
 
 
+/* sticky footer: short pages keep the footer at the bottom of the window */
+body{min-height:100vh; display:flex; flex-direction:column}
+body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
+.footer{margin-top:auto; flex:none}
 /* long product names: wrap the title, keep the price on one line */
 .product-top{flex-wrap:wrap; row-gap:2px}
 .product-top h3{min-width:0}
@@ -175,6 +179,24 @@ a{color:inherit}
         { key: 'carolina', label: 'Carolina Blue', tee: '#a6cbf1', ink: '#ffffff', edge: '#13294b' },
         { key: 'white',    label: 'White',         tee: '#f6f2e8', ink: '#78acd2', edge: '#13294b' }
       ]
+    },
+    'ohio-state': {
+      slug: 'ohio-state', name: 'Ohio State', city: 'Columbus, OH', est: 1870,
+      colors: { main: '#bb0000', dark: '#8a0000', soft: '#fde8e8' },
+      colorLabel: 'Scarlet', blurb: 'Gear for the Oval, High Street and every Saturday in the Shoe.',
+      colorways: [
+        { key: 'black', label: 'Black', tee: '#15171a', ink: '#bb0d2f', edge: '#a7b1b7' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#bb0d2f', edge: '#a7b1b7' }
+      ]
+    },
+    'texas-am': {
+      slug: 'texas-am', name: 'Texas A&M', city: 'College Station, TX', est: 1876,
+      colors: { main: '#500000', dark: '#3a0000', soft: '#f3e6e6' },
+      colorLabel: 'Maroon', blurb: 'Gear for Kyle Field, Northgate and every Saturday at the Zone.',
+      colorways: [
+        { key: 'maroon', label: 'Maroon', tee: '#6d1821', ink: '#ffffff', edge: '#202020' },
+        { key: 'white',  label: 'White',  tee: '#f6f2e8', ink: '#d1d1d1', edge: '#500000' }
+      ]
     }
   };
 
@@ -221,7 +243,7 @@ a{color:inherit}
 // Student Label — shared cart + rendering
 (function () {
   // Set this to your deployed checkout Worker URL (see studentlabel-checkout-worker.js)
-  var CHECKOUT_URL = '';
+  var CHECKOUT_URL = 'https://studentlabel-checkout.iankeaner.workers.dev/';
 
   var D = window.SL_DATA;
   var KEY = 'studentLabelCart';
@@ -274,8 +296,9 @@ a{color:inherit}
     var grid = document.getElementById('productGrid');
     if (!grid) return;
     var slug = grid.getAttribute('data-school');
-    D.productsFor(slug).forEach(function (p) {
-      var state = { cw: p.colorways[0], size: null };
+    D.productsFor(slug).forEach(function (p, i) {
+      // middle card starts on the alternate colorway (e.g. white - orange - white)
+      var state = { cw: p.colorways[(i === 1 && p.colorways.length > 1) ? 1 : 0], size: null };
       var card = document.createElement('article');
       card.className = 'product';
       card.innerHTML =
@@ -401,7 +424,7 @@ a{color:inherit}
 (function(){
   if (location.protocol !== 'file:') return;
   var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
-  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state|texas-am)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
     var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;
