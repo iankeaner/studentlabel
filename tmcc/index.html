@@ -286,8 +286,8 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
     var grid = document.getElementById('productGrid');
     if (!grid) return;
     var slug = grid.getAttribute('data-school');
-    D.productsFor(slug).forEach(function (p) {
-      var state = { cw: p.colorways[0], size: null };
+    D.productsFor(slug).forEach(function (p, i) {
+      var state = { cw: p.colorways[(i === 1 && p.colorways.length > 1) ? 1 : 0], size: null };
       var card = document.createElement('article');
       card.className = 'product';
       card.innerHTML =
