@@ -14,7 +14,7 @@ body{
   background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule) 31px,var(--rule) 32px);
   background-attachment:local;
 }
-body::before{ /* red margin line */
+body::before{
   content:""; position:fixed; left:72px; top:0; bottom:0; width:2px; background:var(--margin); opacity:.7; pointer-events:none; z-index:0;
 }
 @media(max-width:700px){ body::before{ left:14px } }
@@ -22,7 +22,6 @@ h1,h2,h3{font-family:'Bricolage Grotesque','DM Sans',sans-serif; line-height:1.0
 a{color:inherit}
 .wrap{max-width:1080px; margin:0 auto; padding:0 24px; position:relative; z-index:1}
 
-/* nav — brand + cart only */
 .nav{position:sticky; top:0; z-index:20; background:rgba(255,253,246,.94); backdrop-filter:blur(6px); border-bottom:2px solid var(--ink)}
 .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px}
 .brand{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:22px; text-decoration:none; letter-spacing:-.02em;
@@ -107,6 +106,13 @@ a{color:inherit}
 .footer .wrap{padding-top:22px; padding-bottom:26px; font-size:13px; color:#4a5470}
 .footer b{color:var(--ink)}
 
+
+body{min-height:100vh; display:flex; flex-direction:column}
+body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
+.footer{margin-top:auto; flex:none}
+.product-top{flex-wrap:wrap; row-gap:2px}
+.product-top h3{min-width:0}
+.product-top .price{white-space:nowrap; flex:none}
 </style></head>
 <body>
 <header class="nav"><div class="wrap">
@@ -117,10 +123,8 @@ a{color:inherit}
   </a>
 </div></header>
 <main class="wrap"><div class="thanks"><h1>Wrong classroom.</h1><p>That page doesn’t exist.</p><a class="btn" href="/">Back to Student Label</a></div></main>
-<footer class="footer"><div class="wrap"><b>Student Label</b> — student-made gear. Not affiliated with or endorsed by any university; school names are used only to describe where the gear is for.</div></footer>
+<footer class="footer"><div class="wrap"><b>Student Label</b> — student-made gear. Not affiliated with or endorsed by any university or company; school and company names are used only to describe where the gear is for. &nbsp;·&nbsp; <a href="/privacy/">Privacy Policy</a></div></footer>
 <script>
-// Student Label — catalog. Add a school by adding an entry to SCHOOLS and
-// (optionally) overriding listings; every school gets the default designs.
 (function (root) {
   var SCHOOLS = {
     'uw-madison': {
@@ -132,6 +136,56 @@ a{color:inherit}
       slug: 'ut-austin', name: 'UT Austin', city: 'Austin, TX', est: 1883,
       colors: { main: '#bf5700', dark: '#8a3f00', soft: '#fdeedd' },
       colorLabel: 'Burnt Orange', blurb: 'Hook ’em. Gear for the Drag, the Tower at night and anywhere south of campus.'
+    },
+    'nvidia': {
+      slug: 'nvidia', name: 'NVIDIA', city: 'Santa Clara, CA', est: 1993,
+      colors: { main: '#76b900', dark: '#4f7a00', soft: '#eef7d9', ink: '#0b0b0b' },
+      colorLabel: 'Black', blurb: 'For the people who build the GPUs, babysit the clusters and run on coffee.',
+      designs: [
+        { key: 'procaffeination', word: 'Procaffeination', name: 'PROCAFFEINATION TEE', price: 30 },
+        { key: 'engineer',        word: 'Engineer',        name: 'ENGINEER TEE',        price: 30 },
+        { key: 'beer-elements',   word: 'BeEr',            name: 'BEER (ELEMENTS) TEE', price: 30 }
+      ],
+      colorways: [
+        { key: 'black', label: 'Black', tee: '#15171a', ink: '#76b900', edge: '#15171a' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#76b900', edge: '#f6f2e8' }
+      ]
+    },
+    'tmcc': {
+      slug: 'tmcc', name: 'TMCC', city: 'Reno, NV', est: 1971,
+      colors: { main: '#aab300', dark: '#7a8000', soft: '#f4f6d0', ink: '#0b0b0b' },
+      colorLabel: 'Black', blurb: 'Truckee Meadows Community College. For the Wizards, the transfer plans and the long drives up to the Sierra.',
+      colorways: [
+        { key: 'black', label: 'Black', tee: '#15171a', ink: '#aab300', edge: '#15171a' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#aab300', edge: '#f6f2e8' }
+      ]
+    },
+    'unc-chapel-hill': {
+      slug: 'unc-chapel-hill', name: 'UNC Chapel Hill', city: 'Chapel Hill, NC', est: 1789,
+      colors: { main: '#7bafd4', dark: '#4b7fa6', soft: '#e6f0f8', ink: '#13294b' },
+      colorLabel: 'Carolina Blue', blurb: 'Gear for Franklin Street, the Old Well and every walk across the Quad.',
+      colorways: [
+        { key: 'carolina', label: 'Carolina Blue', tee: '#a6cbf1', ink: '#ffffff', edge: '#13294b' },
+        { key: 'white',    label: 'White',         tee: '#f6f2e8', ink: '#78acd2', edge: '#13294b' }
+      ]
+    },
+    'ohio-state': {
+      slug: 'ohio-state', name: 'Ohio State', city: 'Columbus, OH', est: 1870,
+      colors: { main: '#bb0000', dark: '#8a0000', soft: '#fde8e8' },
+      colorLabel: 'Scarlet', blurb: 'Gear for the Oval, High Street and every Saturday in the Shoe.',
+      colorways: [
+        { key: 'black', label: 'Black', tee: '#15171a', ink: '#bb0d2f', edge: '#a7b1b7' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#bb0d2f', edge: '#a7b1b7' }
+      ]
+    },
+    'texas-am': {
+      slug: 'texas-am', name: 'Texas A&M', city: 'College Station, TX', est: 1876,
+      colors: { main: '#500000', dark: '#3a0000', soft: '#f3e6e6' },
+      colorLabel: 'Maroon', blurb: 'Gear for Kyle Field, Northgate and every Saturday at the Zone.',
+      colorways: [
+        { key: 'maroon', label: 'Maroon', tee: '#6d1821', ink: '#ffffff', edge: '#202020' },
+        { key: 'white',  label: 'White',  tee: '#f6f2e8', ink: '#d1d1d1', edge: '#500000' }
+      ]
     }
   };
 
@@ -145,16 +199,16 @@ a{color:inherit}
 
   function productsFor(slug) {
     var s = SCHOOLS[slug];
-    return DESIGNS.map(function (d) {
+    return (s.designs || DESIGNS).map(function (d) {
       return {
         id: slug + '-' + d.key,
         school: slug,
         design: d.key,
         word: d.word,
-        name: d.word + ' TEE',
+        name: d.name || (d.word + ' TEE'),
         price: d.price,
         sizes: SIZES,
-        colorways: [
+        colorways: s.colorways || [
           { key: 'white',  label: 'White',       tee: '#f6f2e8', ink: s.colors.main, edge: '#111111' },
           { key: 'school', label: s.colorLabel,  tee: s.colors.main, ink: '#ffffff',  edge: '#111111' }
         ]
@@ -175,10 +229,8 @@ a{color:inherit}
 
 </script>
 <script>
-// Student Label — shared cart + rendering
 (function () {
-  // Set this to your deployed checkout Worker URL (see studentlabel-checkout-worker.js)
-  var CHECKOUT_URL = '';
+  var CHECKOUT_URL = 'https://studentlabel-checkout.iankeaner.workers.dev/';
 
   var D = window.SL_DATA;
   var KEY = 'studentLabelCart';
@@ -208,7 +260,6 @@ a{color:inherit}
     writeCart(cart);
   }
 
-  // ---------- tee illustration (inline SVG, no image files needed) ----------
   var TEE = 'M122 38 L162 26 Q200 72 238 26 L278 38 L372 100 L336 164 L292 138 L292 384 L108 384 L108 138 L64 164 L28 100 Z';
   function teeSVG(p, cw, uid) {
     var im = window.SL_IMAGES && window.SL_IMAGES[p.id + '-' + cw.key];
@@ -226,7 +277,6 @@ a{color:inherit}
   }
   window.SL_teeSVG = teeSVG;
 
-  // ---------- school shop page ----------
   function renderShop() {
     var grid = document.getElementById('productGrid');
     if (!grid) return;
@@ -275,7 +325,6 @@ a{color:inherit}
     });
   }
 
-  // ---------- landing ----------
   function renderLanding() {
     var el = document.getElementById('schoolList');
     if (!el) return;
@@ -284,7 +333,7 @@ a{color:inherit}
       var a = document.createElement('a');
       a.className = 'school-card'; a.href = '/' + s.slug + '/';
       if (window.SL_SPA) { a.setAttribute('data-route', '/' + s.slug + '/'); a.href = '#'; }
-      a.style.setProperty('--c', s.colors.main); a.style.setProperty('--d', s.colors.dark);
+      a.style.setProperty('--c', s.colors.main); a.style.setProperty('--d', s.colors.dark); if (s.colors.ink) a.style.color = s.colors.ink;
       a.innerHTML = '<span class="est">EST. ' + s.est + '</span><strong>' + esc(s.name) + '</strong><span class="city">' + esc(s.city) + '</span><span class="go">Shop the label →</span>';
       el.appendChild(a);
     });
@@ -294,7 +343,6 @@ a{color:inherit}
     el.appendChild(soon);
   }
 
-  // ---------- cart page ----------
   function renderCart() {
     var box = document.getElementById('cartItems');
     if (!box) return;
@@ -335,7 +383,7 @@ a{color:inherit}
     if (!btn) return;
     var msg = document.getElementById('checkoutMsg');
     btn.onclick = function () {
-      if (!CHECKOUT_URL) { msg.textContent = 'Checkout isn’t connected yet — add your Worker URL in assets/app.js.'; return; }
+      if (!CHECKOUT_URL) { msg.textContent = 'Checkout isn’t connected yet — set CHECKOUT_URL to your Worker URL in cart/index.html.'; return; }
       btn.disabled = true; btn.textContent = 'One sec…'; msg.textContent = '';
       fetch(CHECKOUT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(readCart()) })
         .then(function (r) { return r.json(); })
@@ -354,11 +402,11 @@ a{color:inherit}
 
 </script>
 <script>
-// Local-preview helper: when opened straight from disk (file://), site links like "/cart/" have no server to resolve them, so map them to the matching index.html. Does nothing once hosted.
+// local preview function
 (function(){
   if (location.protocol !== 'file:') return;
   var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
-  if (/\/(cart|order-success|uw-madison|ut-austin)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state|texas-am|privacy)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
     var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;

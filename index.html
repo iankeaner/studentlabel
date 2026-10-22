@@ -4,7 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bricolage+Grotesque:wght@700;800&family=Caveat:wght@700&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --g:32px; --m:calc(var(--g)*2.25); --hdr:calc(var(--g)*3); --gap:calc(var(--g)*.8); --W:calc(var(--g)*33.75); /* ruled-line spacing; margin line, header and gutter all scale with it */
+  --g:32px; --m:calc(var(--g)*2.25); --hdr:calc(var(--g)*3); --gap:calc(var(--g)*.8); --W:calc(var(--g)*33.75);
   --paper:#fbf7ee; --ink:#14213d; --rule:#cfe2f3; --margin:#f2a7a7; --hl:#ffe14d; --pencil:#f5b700; --line:#e6dfcf; --card:#fffdf8;
 }
 *{box-sizing:border-box}
@@ -15,17 +15,16 @@ body{
   position:relative; min-height:100vh; display:flex; flex-direction:column;
   background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--g) - 1px),var(--rule) calc(var(--g) - 1px),var(--rule) var(--g));
 }
-body::before{ /* red margin line */
+body::before{
   content:""; position:absolute; left:var(--m); top:var(--hdr); bottom:0; width:2px; background:var(--margin); opacity:.7; pointer-events:none; z-index:0;
 }
 h1,h2,h3{font-family:'Bricolage Grotesque','DM Sans',sans-serif; line-height:1.05; margin:0}
 a{color:inherit}
 .wrap{max-width:1080px; margin:0 auto; padding:0 24px; position:relative; z-index:1}
 
-/* nav — brand + cart only */
-.nav{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:2px solid var(--margin)} /* the header is the notebook's top margin: blank paper with the red rule under it */
+.nav{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:2px solid var(--margin)}
 .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:var(--hdr)}
-.nav::before{content:""; position:absolute; left:var(--m); top:0; bottom:-2px; width:2px; background:var(--margin); opacity:.7; pointer-events:none} /* red margin line runs through the header */
+.nav::before{content:""; position:absolute; left:var(--m); top:0; bottom:-2px; width:2px; background:var(--margin); opacity:.7; pointer-events:none}
 .brand{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:22px; text-decoration:none; letter-spacing:-.02em;
   background:linear-gradient(transparent 58%,var(--hl) 58%); padding:0 4px}
 .cart-btn{display:inline-flex; align-items:center; gap:10px; background:var(--ink); color:#fff; border:0; border-radius:999px; padding:10px 18px 10px 16px;
@@ -112,10 +111,9 @@ a{color:inherit}
 .brand{font-size:calc(var(--g)*1.35); line-height:1.1; white-space:nowrap}
 
 main.wrap{flex:1 0 auto; width:100%}
-.footer .wrap{padding-bottom:84px !important} /* room for the floating doodle bar */
+.footer .wrap{padding-bottom:84px !important}
 .footer{margin-top:auto}
-/* Doodle layer */
-#doodle{position:absolute; left:0; top:0; z-index:10; /* below the header (z 20) so doodles never show on it */  pointer-events:none; touch-action:none}
+#doodle{position:absolute; left:0; top:0; z-index:10;   pointer-events:none; touch-action:none}
 body.doodling #doodle{pointer-events:auto; cursor:crosshair}
 body.doodling{user-select:none; -webkit-user-select:none}
 .dd-bar{position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:50; display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; max-width:calc(100vw - 24px);
@@ -128,21 +126,17 @@ body.doodling .dd-bar .dd-tools{display:flex}
 .dd-sw{width:24px; height:24px; padding:0 !important; border-radius:50% !important}
 .dd-sw.on{outline:3px solid var(--ink); outline-offset:2px}
 
-/* Keep all content to the right of the red margin line (line sits at x=72..74) */
 .wrap{max-width:var(--W) !important; padding-left:clamp(24px, calc(var(--m) + var(--gap) - (100vw - var(--W)) / 2), calc(var(--m) + var(--gap)))}
 @media(max-width:700px){ :root{--m:calc(var(--g)*.6); --gap:calc(var(--g)*.5)} .wrap{padding-left:calc(var(--m) + var(--gap))} }
-/* Hero text sits on the ruled lines (32px grid) */
 .hero .kicker{display:block !important; transform:rotate(-2deg) !important; transform-origin:left center; line-height:var(--g) !important; font-size:calc(var(--g)*.94); position:relative}
 .hero h1{line-height:calc(var(--g)*3) !important; margin:0 0 var(--g) !important; position:relative}
 .hero p{line-height:var(--g) !important; font-size:max(16px,calc(var(--g)*.6)); margin:0 !important; position:relative}
 @media(max-width:700px){ .hero h1{line-height:calc(var(--g)*2) !important} }
 
-/* long product names: wrap the title, keep the price on one line */
 .product-top{flex-wrap:wrap; row-gap:2px}
 .product-top h3{min-width:0}
 .product-top .price{white-space:nowrap; flex:none}
 </style><script>
-// Notebook proportions: ruled-line spacing scales with the window; margin line, header and gutter are multiples of it.
 (function(){var r=document.documentElement;function f(){var w=window.innerWidth;var g=w<=700?Math.max(26,Math.min(30,Math.round(w*.07))):Math.max(30,Math.min(40,Math.round(w*.025)));r.style.setProperty('--g',g+'px');var m=w<=700;r.style.setProperty('--m',Math.round(g*(m?.6:2.25))+'px');r.style.setProperty('--gap',Math.round(g*(m?.5:.8))+'px');}f();window.addEventListener('resize',f);})();
 </script>
 </head>
@@ -163,7 +157,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
   <div class="section-title">Choose your school</div>
   <div class="school-list" id="schoolList"></div>
 </main>
-<footer class="footer"><div class="wrap"><b>Student Label</b> — student-made gear. Not affiliated with or endorsed by any university or company; school and company names are used only to describe where the gear is for.</div></footer>
+<footer class="footer"><div class="wrap"><b>Student Label</b> — student-made gear. Not affiliated with or endorsed by any university or company; school and company names are used only to describe where the gear is for. &nbsp;·&nbsp; <a href="/privacy/">Privacy Policy</a></div></footer>
 <canvas id="doodle" aria-hidden="true"></canvas>
 <div class="dd-bar" id="ddBar">
   <button type="button" class="dd-toggle" id="ddToggle" aria-pressed="false">✏️ Doodle</button>
@@ -180,8 +174,6 @@ body.doodling .dd-bar .dd-tools{display:flex}
 </div>
 
 <script>
-// Student Label — catalog. Add a school by adding an entry to SCHOOLS and
-// (optionally) overriding listings; every school gets the default designs.
 (function (root) {
   var SCHOOLS = {
     'uw-madison': {
@@ -286,9 +278,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
 
 </script>
 <script>
-// Student Label — shared cart + rendering
 (function () {
-  // Set this to your deployed checkout Worker URL (see studentlabel-checkout-worker.js)
   var CHECKOUT_URL = 'https://studentlabel-checkout.iankeaner.workers.dev/';
 
   var D = window.SL_DATA;
@@ -319,7 +309,6 @@ body.doodling .dd-bar .dd-tools{display:flex}
     writeCart(cart);
   }
 
-  // ---------- tee illustration (inline SVG, no image files needed) ----------
   var TEE = 'M122 38 L162 26 Q200 72 238 26 L278 38 L372 100 L336 164 L292 138 L292 384 L108 384 L108 138 L64 164 L28 100 Z';
   function teeSVG(p, cw, uid) {
     var im = window.SL_IMAGES && window.SL_IMAGES[p.id + '-' + cw.key];
@@ -337,7 +326,6 @@ body.doodling .dd-bar .dd-tools{display:flex}
   }
   window.SL_teeSVG = teeSVG;
 
-  // ---------- school shop page ----------
   function renderShop() {
     var grid = document.getElementById('productGrid');
     if (!grid) return;
@@ -386,7 +374,6 @@ body.doodling .dd-bar .dd-tools{display:flex}
     });
   }
 
-  // ---------- landing ----------
   function renderLanding() {
     var el = document.getElementById('schoolList');
     if (!el) return;
@@ -405,7 +392,6 @@ body.doodling .dd-bar .dd-tools{display:flex}
     el.appendChild(soon);
   }
 
-  // ---------- cart page ----------
   function renderCart() {
     var box = document.getElementById('cartItems');
     if (!box) return;
@@ -465,7 +451,6 @@ body.doodling .dd-bar .dd-tools{display:flex}
 
 </script>
 <script>
-// Nudge hero text so each baseline lands exactly on a ruled line of the page background.
 (function () {
   var GRID = 32, sels = ['.hero .kicker', '.hero h1', '.hero p'];
   function align() {
@@ -486,14 +471,12 @@ body.doodling .dd-bar .dd-tools{display:flex}
 })();
 </script>
 <script>
-// Doodle on the homepage: toggle the pencil, draw anywhere on the page.
 (function () {
   var cv = document.getElementById('doodle'); if (!cv) return;
   var ctx = cv.getContext('2d'), strokes = [], cur = null, color = '#2b2b2b', KEY = 'studentLabelDoodle';
   try { var saved = JSON.parse(localStorage.getItem(KEY) || '[]'); if (Array.isArray(saved)) strokes = saved; } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(strokes.slice(-400))); } catch (e) {} }
   function size() {
-    // measure the page itself (not the canvas), so the canvas can never make the page taller than its content
     var b = document.body, w = Math.max(b.offsetWidth, window.innerWidth), h = Math.max(b.offsetHeight, window.innerHeight), d = window.devicePixelRatio || 1;
     cv.style.width = '0px'; cv.style.height = '0px';
     cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0); redraw();
@@ -521,11 +504,11 @@ body.doodling .dd-bar .dd-tools{display:flex}
 })();
 </script>
 <script>
-// Local-preview helper: when opened straight from disk (file://), site links like "/cart/" have no server to resolve them, so map them to the matching index.html. Does nothing once hosted.
+// local preview function
 (function(){
   if (location.protocol !== 'file:') return;
   var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
-  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state|texas-am)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state|texas-am|privacy)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
     var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;
