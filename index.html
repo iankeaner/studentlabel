@@ -235,6 +235,15 @@ body.doodling .dd-bar .dd-tools{display:flex}
         { key: 'maroon', label: 'Maroon', tee: '#6d1821', ink: '#ffffff', edge: '#202020' },
         { key: 'white',  label: 'White',  tee: '#f6f2e8', ink: '#d1d1d1', edge: '#500000' }
       ]
+    },
+    'great-bay': {
+      slug: 'great-bay', name: 'Great Bay CC', city: 'Portsmouth, NH', est: 1945, altMiddle: true,
+      colors: { main: '#003399', dark: '#00266e', soft: '#e6ecf8', ink: '#ffffff' },
+      colorLabel: 'Navy', blurb: 'Great Bay Community College. For the seacoast commute, the late labs and the first-gen firsts.',
+      colorways: [
+        { key: 'navy',  label: 'Navy',  tee: '#242b48', ink: '#003399', edge: '#ffcc00' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#ffcc00', edge: '#003399' }
+      ]
     }
   };
 
@@ -508,7 +517,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
 (function(){
   if (location.protocol !== 'file:') return;
   var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
-  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state|texas-am|privacy)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state|texas-am|great-bay|privacy)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
     var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;
