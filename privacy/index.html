@@ -126,6 +126,9 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
 .policy a{text-decoration:underline}
 .policy mark.todo{background:var(--hl); padding:0 4px; border-radius:2px}
 .footer a{color:var(--ink)}
+.sk{visibility:hidden;pointer-events:none}
+.product.sk{min-height:600px}
+.school-card.sk{min-height:220px}
 </style></head>
 <body>
 <header class="nav"><div class="wrap">
@@ -358,6 +361,7 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
   function renderShop() {
     var grid = document.getElementById('productGrid');
     if (!grid) return;
+    grid.innerHTML = '';
     var slug = grid.getAttribute('data-school');
     D.productsFor(slug).forEach(function (p) {
       var state = { cw: p.colorways[0], size: null };
@@ -406,6 +410,7 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
   function renderLanding() {
     var el = document.getElementById('schoolList');
     if (!el) return;
+    el.innerHTML = '';
     Object.keys(D.SCHOOLS).forEach(function (k) {
       var s = D.SCHOOLS[k];
       var a = document.createElement('a');

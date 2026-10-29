@@ -136,6 +136,9 @@ body.doodling .dd-bar .dd-tools{display:flex}
 .product-top{flex-wrap:wrap; row-gap:2px}
 .product-top h3{min-width:0}
 .product-top .price{white-space:nowrap; flex:none}
+.sk{visibility:hidden;pointer-events:none}
+.product.sk{min-height:600px}
+.school-card.sk{min-height:220px}
 </style><script>
 (function(){var r=document.documentElement;function f(){var w=window.innerWidth;var g=w<=700?Math.max(26,Math.min(30,Math.round(w*.07))):Math.max(30,Math.min(40,Math.round(w*.025)));r.style.setProperty('--g',g+'px');var m=w<=700;r.style.setProperty('--m',Math.round(g*(m?.6:2.25))+'px');r.style.setProperty('--gap',Math.round(g*(m?.5:.8))+'px');}f();window.addEventListener('resize',f);})();
 </script>
@@ -155,7 +158,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
     <p>Pick your school and shop the label made for it. Tees for the stuff that actually happens on campus.</p>
   </section>
   <div class="section-title">Choose your school</div>
-  <div class="school-list" id="schoolList"></div>
+  <div class="school-list" id="schoolList"><a class="school-card sk" aria-hidden="true" tabindex="-1"></a><a class="school-card sk" aria-hidden="true" tabindex="-1"></a><a class="school-card sk" aria-hidden="true" tabindex="-1"></a><a class="school-card sk" aria-hidden="true" tabindex="-1"></a><a class="school-card sk" aria-hidden="true" tabindex="-1"></a><a class="school-card sk" aria-hidden="true" tabindex="-1"></a><a class="school-card sk" aria-hidden="true" tabindex="-1"></a><a class="school-card sk" aria-hidden="true" tabindex="-1"></a><a class="school-card sk" aria-hidden="true" tabindex="-1"></a></div>
 </main>
 <footer class="footer"><div class="wrap"><b>Student Label</b> — student-made gear. Not affiliated with or endorsed by any university or company; school and company names are used only to describe where the gear is for. &nbsp;·&nbsp; <a href="/privacy/">Privacy Policy</a></div></footer>
 <canvas id="doodle" aria-hidden="true"></canvas>
@@ -338,6 +341,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
   function renderShop() {
     var grid = document.getElementById('productGrid');
     if (!grid) return;
+    grid.innerHTML = '';
     var slug = grid.getAttribute('data-school');
     D.productsFor(slug).forEach(function (p, i) {
       var state = { cw: p.colorways[(i === 1 && p.colorways.length > 1) ? 1 : 0], size: null };
@@ -386,6 +390,7 @@ body.doodling .dd-bar .dd-tools{display:flex}
   function renderLanding() {
     var el = document.getElementById('schoolList');
     if (!el) return;
+    el.innerHTML = '';
     Object.keys(D.SCHOOLS).forEach(function (k) {
       var s = D.SCHOOLS[k];
       var a = document.createElement('a');
