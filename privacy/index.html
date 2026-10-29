@@ -167,7 +167,7 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
 <p>We do not sell your personal information. We may disclose information if the law requires it or to protect our rights.</p>
 
 <h2>Cookies and local storage</h2>
-<p>We do not use tracking or advertising cookies. We use your browser&rsquo;s local storage to remember your cart. Stripe&rsquo;s checkout page may set its own cookies, which are covered by Stripe&rsquo;s privacy policy.</p>
+<p>We do not use tracking or advertising cookies. We use your browser&rsquo;s local storage to remember your cart. We use Cloudflare Web Analytics to count visits and page views. It does not use cookies or track you across other sites. Stripe&rsquo;s checkout page may set its own cookies, which are covered by Stripe&rsquo;s privacy policy.</p>
 
 <h2>Email choices</h2>
 <p>Every marketing email includes an unsubscribe link. When you unsubscribe, we stop sending marketing emails to that address, and we process requests within 10 business days. We may still send emails about orders you have placed.</p>
@@ -189,8 +189,8 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
 
 <h2>Contact us</h2>
 <p>Student Label<br>
-<mark class="todo">735 Sobrato Dr, Campbell, CA</mark><br>
-<mark class="todo">hello@studentlabel.com</mark></p>
+<mark class="todo">[ADD YOUR MAILING ADDRESS]</mark><br>
+<mark class="todo">[ADD YOUR CONTACT EMAIL]</mark></p>
 </article></main>
 <footer class="footer"><div class="wrap"><b>Student Label</b> — student-made gear. Not affiliated with or endorsed by any university or company; school and company names are used only to describe where the gear is for. &nbsp;·&nbsp; <a href="/privacy/">Privacy Policy</a></div></footer>
 <script>
@@ -254,6 +254,15 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
       colorways: [
         { key: 'maroon', label: 'Maroon', tee: '#6d1821', ink: '#ffffff', edge: '#202020' },
         { key: 'white',  label: 'White',  tee: '#f6f2e8', ink: '#d1d1d1', edge: '#500000' }
+      ]
+    },
+    'great-bay': {
+      slug: 'great-bay', name: 'Great Bay CC', city: 'Portsmouth, NH', est: 1945, altMiddle: true,
+      colors: { main: '#003399', dark: '#00266e', soft: '#e6ecf8', ink: '#ffffff' },
+      colorLabel: 'Navy', blurb: 'Great Bay Community College. For the seacoast commute, the late labs and the first-gen firsts.',
+      colorways: [
+        { key: 'navy',  label: 'Navy',  tee: '#242b48', ink: '#003399', edge: '#ffcc00' },
+        { key: 'white', label: 'White', tee: '#f6f2e8', ink: '#ffcc00', edge: '#003399' }
       ]
     }
   };
@@ -475,7 +484,7 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
 (function(){
   if (location.protocol !== 'file:') return;
   var dir = location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '');
-  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state|texas-am|privacy)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
+  if (/\/(cart|order-success|uw-madison|ut-austin|nvidia|tmcc|unc-chapel-hill|ohio-state|texas-am|great-bay|privacy)\/$/.test(dir)) dir = dir.replace(/[^\/]+\/$/, '');
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a || a.hasAttribute('data-route')) return;
     var h = a.getAttribute('href'); if (!h || h.charAt(0) !== '/' || h.charAt(1) === '/') return;
@@ -495,4 +504,5 @@ body>.wrap,body>main,body>#view{flex:1 0 auto; width:100%}
   });
 })();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "392df6dc69c54c9daf8cfe8249ed2c2a"}'></script>
 </body></html>
